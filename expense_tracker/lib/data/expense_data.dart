@@ -150,4 +150,20 @@ class ExpenseData {
     }
     return dailyExpenseSummary;
   }
+
+  //take the Start of week in yyyymmdd and return a List of expenses from this week
+  List<double> getWeekSummary(String StartOfWeekDate) {
+    Map<String, double> dailyExpenseSummary = calculateDailyExpenseSummary();
+
+    List<double> WeeklyExpenses = List.filled(7, 0);
+
+    DateTime StartOfWeekDateTime = createDateTimeObject(StartOfWeekDate);
+
+    for (var i = 0; i < 6; i++) {
+      String dayInyyyymmdd =
+          dateTimeToString(StartOfWeekDateTime.add(Duration(days: i)));
+      WeeklyExpenses[i] = dailyExpenseSummary[dayInyyyymmdd] ?? 0;
+    }
+    return WeeklyExpenses;
+  }
 }

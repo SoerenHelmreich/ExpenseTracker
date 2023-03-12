@@ -22,24 +22,43 @@ class MyBarGraph extends StatelessWidget {
 
     return BarChart(
       BarChartData(
-        maxY: 100,
-        minY: 0,
-        gridData: FlGridData(show: false),
+        maxY: 30,
+        minY: -30,
+        titlesData: titlesData,
+        alignment: BarChartAlignment.spaceAround,
+        gridData: FlGridData(
+          show: true,
+          checkToShowHorizontalLine: (value) => value % 5 == 0,
+          getDrawingHorizontalLine: (value) {
+            if (value == 0) {
+              return FlLine(
+                color: Colors.grey,
+                strokeWidth: 3,
+              );
+            }
+            return FlLine(
+              color: Colors.green.withAlpha(0),
+              strokeWidth: 0.8,
+            );
+          },
+        ),
         barGroups: myBarData.barData
             .map(
               (data) => BarChartGroupData(
                 x: data.position,
                 barRods: [
                   BarChartRodData(
-                      toY: data.height,
-                      color: Colors.amber[200],
-                      width: 25,
-                      borderRadius: BorderRadius.circular(4),
-                      backDrawRodData: BackgroundBarChartRodData(
-                        show: true,
-                        toY: 100,
-                        color: Colors.grey[200],
-                      ))
+                    toY: data.height,
+                    color: Colors.amber,
+                    width: 25,
+                    borderRadius: BorderRadius.circular(4),
+                    backDrawRodData: BackgroundBarChartRodData(
+                      show: true,
+                      toY: 30,
+                      fromY: -30,
+                      color: Colors.yellow[50],
+                    ),
+                  ),
                 ],
               ),
             )
@@ -47,4 +66,64 @@ class MyBarGraph extends StatelessWidget {
       ),
     );
   }
+}
+
+FlTitlesData get titlesData => FlTitlesData(
+      show: true,
+      bottomTitles: AxisTitles(
+        sideTitles: SideTitles(
+          showTitles: true,
+          reservedSize: 30,
+          getTitlesWidget: getTitles,
+        ),
+      ),
+      leftTitles: AxisTitles(
+        sideTitles: SideTitles(showTitles: false),
+      ),
+      topTitles: AxisTitles(
+        sideTitles: SideTitles(showTitles: false),
+      ),
+      rightTitles: AxisTitles(
+        sideTitles: SideTitles(showTitles: false),
+      ),
+    );
+
+Widget getTitles(double value, TitleMeta meta) {
+  final style = TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+    fontSize: 14,
+  );
+  String text;
+  switch (value.toInt()) {
+    case 0:
+      text = 'Mon';
+      break;
+    case 1:
+      text = 'Tue';
+      break;
+    case 2:
+      text = 'Wed';
+      break;
+    case 3:
+      text = 'Thur';
+      break;
+    case 4:
+      text = 'Fri';
+      break;
+    case 5:
+      text = 'Sat';
+      break;
+    case 6:
+      text = 'Sun';
+      break;
+    default:
+      text = '';
+      break;
+  }
+  return SideTitleWidget(
+    axisSide: meta.axisSide,
+    space: 4,
+    child: Text(text, style: style),
+  );
 }

@@ -23,12 +23,14 @@ class BarData {
 
   //initialize bar data
   void initializeBarData() {
-    IndividualBar(position: 0, height: monAmount);
-    IndividualBar(position: 0, height: tueAmount);
-    IndividualBar(position: 0, height: wedAmount);
-    IndividualBar(position: 0, height: thurAmount);
-    IndividualBar(position: 0, height: friAmount);
-    IndividualBar(position: 0, height: satAmount);
-    IndividualBar(position: 0, height: sunAmount);
+    barData = [
+      IndividualBar(position: 0, height: monAmount),
+      IndividualBar(position: 1, height: tueAmount),
+      IndividualBar(position: 2, height: wedAmount),
+      IndividualBar(position: 3, height: thurAmount),
+      IndividualBar(position: 4, height: friAmount),
+      IndividualBar(position: 5, height: satAmount),
+      IndividualBar(position: 6, height: sunAmount),
+    ];
   }
 }
